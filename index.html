@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PHYSBOX S — 물리 조립 놀이터</title>
+  <link rel="stylesheet" href="./style.css" />
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/",
+      "cannon-es": "https://cdn.jsdelivr.net/npm/cannon-es@0.20.0/dist/cannon-es.js"
+    }
+  }
+  </script>
+</head>
+<body>
+  <div id="hud">
+    <div class="brand">
+      <strong>PHYSBOX</strong>
+      <span>S · 조립하고 탄다</span>
+    </div>
+    <div id="mode-pill">제작</div>
+    <div id="part-bar"></div>
+    <div class="actions">
+      <button data-act="play">체험 Play</button>
+      <button data-act="build">제작</button>
+      <button data-act="save">저장</button>
+      <button data-act="load">불러오기</button>
+      <button data-act="reset">리셋</button>
+    </div>
+  </div>
+  <div id="hint"></div>
+  <div id="stats"></div>
+  <canvas id="c"></canvas>
+  <script type="module" src="./game.js"></script>
+</body>
+</html>
