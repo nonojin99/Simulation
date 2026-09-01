@@ -2,6 +2,7 @@ import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import * as CANNON from "cannon-es";
 
+export { THREE, CANNON };
 export const MAX_PARTS = 40;
 export const GRID = 1;
 export const SAVE_KEY = "physbox-s-v1";
@@ -84,3 +85,38 @@ world.addContactMaterial(new CANNON.ContactMaterial(matPart, matPart, { friction
 world.addContactMaterial(new CANNON.ContactMaterial(matWheel, matPart, { friction: 0.8, restitution: 0.0 }));
 
 export const anchors = [];
+
+function addStaticBox(sx, sy, sz, x, y, z, rotZ = 0, color = 0x4d7c0f, clickable = false) {
+  const mesh = new THREE.Mesh(
+    new THREE.BoxGeometry(sx, sy, sz),
+    new THREE.MeshStandardMaterial({ color, roughness: 0.9 })
+  );
+  mesh.position.set(x, y, z);
+  mesh.rotation.z = rotZ;
+  mesh.receiveShadow = true;
+  mesh.castShadow = true;
+  scene.add(mesh);
+  const body = new CANNON.Body({ mass: 0, material: matGround, type: CANNON.Body.STATIC });
+  body.addShape(new CANNON.Box(new CANNON.Vec3(sx / 2, sy / 2, sz / 2)));
+  body.position.set(x, y, z);
+  body.quaternion.setFromEuler(0, 0, rotZ);
+  world.addBody(body);
+  if (clickable) {
+    const id = "anchor-" + anchors.length;
+    mesh.userData.partId = id;
+    anchors.push({ id, mesh, body, type: "anchor" });
+  }
+}
+
+addStaticBox(80, 1, 80, 0, -0.5, 0, 0, 0x3f6b2a);
+addStaticBox(14, 1.2, 8, 10, 1.2, -6, -0.28, 0x5b8c3a);
+addStaticBox(1.2, 8, 1.2, -8, 4, 0, 0, 0x78716c, true);
+addStaticBox(1.2, 8, 1.2, 8, 4, 0, 0, 0x78716c, true);
+
+function resize() {
+  renderer.setSize(innerWidth, innerHeight, false);
+  camera.aspect = innerWidth / innerHeight;
+  camera.updateProjectionMatrix();
+}
+addEventListener("resize", resize);
+resize();
