@@ -1,9 +1,12 @@
 import {
   THREE, CANNON, PARTS, MAX_PARTS, SAVE_KEY, state, hint, stats, modePill, setHint,
-  canvas, renderer, scene, camera, orbit, world, anchors, grid, preview, view,
-  raycaster, pointer, groundPlane, snap, addPart, findById, removePart, connect,
-  autoWeld, clearWorldParts, snapshot, applySnapshot, setBodyKinematic, updateLinkHelpers,
+  canvas, renderer, camera, orbit, world, anchors,
 } from "./world.js";
+import {
+  grid, preview, view, raycaster, pointer, groundPlane, snap, addPart, findById,
+  removePart, connect, autoWeld, clearWorldParts, snapshot, applySnapshot,
+  setBodyKinematic, updateLinkHelpers,
+} from "./parts.js";
 
 let authored = { parts: [], links: [] };
 
